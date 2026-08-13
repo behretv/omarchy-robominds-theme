@@ -29,6 +29,12 @@ def main():
         default=Path("colors.toml"),
         help="Output file path (default: colors.toml)"
     )
+    parser.add_argument(
+        "--update-readme",
+        action="store_true",
+        default=False,
+        help="Also update the palette swatch table in README.md",
+    )
     
     args = parser.parse_args()
     
@@ -45,6 +51,16 @@ def main():
             f.write(f'{key} = "{value}"\n')
     
     print(f"✓ Generated {args.output} ({args.mode} mode, {len(palette)} colors)")
+    
+    if args.update_readme:
+        from palettgen._readme import update_readme
+        readme_path = Path("README.md")
+        if readme_path.is_file():
+            update_readme(readme_path, args.output)
+            print(f"✓ Updated {readme_path} palette swatch table")
+        else:
+            print(f"Warning: {readme_path} not found, skipping README update")
+    
     return 0
 
 
