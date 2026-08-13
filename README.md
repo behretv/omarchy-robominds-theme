@@ -62,13 +62,16 @@ Generated palette swatches (auto-generated — do not edit by hand):
 | `color14` | `#00FF87` | ![#00FF87](data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20width%3D%2212%22%20height%3D%2212%22%3E%3Crect%20width%3D%2212%22%20height%3D%2212%22%20fill%3D%22%2300FF87%22/%3E%3C/svg%3E) | bright cyan |
 | `color15` | `#DBDBDB` | ![#DBDBDB](data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20width%3D%2212%22%20height%3D%2212%22%3E%3Crect%20width%3D%2212%22%20height%3D%2212%22%20fill%3D%22%23DBDBDB%22/%3E%3C/svg%3E) | bright white |
 
-## Algorithm
+## Palette
 
-1. Converts brand color to Okhsl color space
-2. Extracts hue and aligns it with standard ANSI blue position (240°)
-3. Generates 6 accent colors by rotating hue in 60° steps
-4. Applies perceptually-uniform lightness and saturation values
-5. Validates contrast ratios and color distinctness
+### Dark mode
+
+![Palette Dark](palette-dark.png)
+
+### Light mode
+
+![Palette Light](palette-light.png)
+
 
 ## Testing
 
