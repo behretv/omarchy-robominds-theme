@@ -14,7 +14,8 @@ def validate_palette(palette: dict) -> bool:
 
     Checks:
     - All colors are valid hex format
-    - Contrast ratio >= 3.0:1 (practical minimum for terminal use)
+    - Contrast ratio >= 3.0:1 (minimum for terminal readability;
+      below WCAG AA's 4.5:1 because some brand colors cannot achieve it)
     - Background and foreground are different
 
     Returns:
@@ -47,7 +48,11 @@ def validate_palette(palette: dict) -> bool:
     contrast = (max(l_bg, l_fg) + 0.05) / (min(l_bg, l_fg) + 0.05)
 
     if contrast < 3.0:
-        raise ValueError(f"Contrast ratio {contrast:.2f} < 3.0 (minimum for terminal readability)")
+        raise ValueError(
+            f"Contrast ratio {contrast:.2f} < 3.0 "
+            f"(minimum for terminal readability; "
+            f"WCAG AA recommends 4.5:1 but some brand colors cannot achieve it)"
+        )
 
     # Check that background and foreground are different
     if bg == fg:
@@ -74,8 +79,9 @@ def generate_palette(brand_color: str, mode: str = "dark") -> dict:
     # 2. Calculate hue offset to align brand with standard ANSI blue (240 degrees)
     hue_offset = 240.0 - brand_h
 
-    # 3. Generate 6 accent hues by rotating from brand hue in 60 degree steps
-    accent_hues = [(brand_h + i * 60.0) % 360.0 for i in range(6)]
+    # 3. Generate 6 accent hues at standard ANSI positions with offset applied
+    ansi_positions = [0, 60, 120, 180, 240, 300]  # red, yellow, green, cyan, blue, magenta
+    accent_hues = [(pos + hue_offset) % 360.0 for pos in ansi_positions]
 
     # 4. Mode-specific lightness/saturation values
     if mode == "dark":
@@ -90,23 +96,23 @@ def generate_palette(brand_color: str, mode: str = "dark") -> dict:
         raise ValueError(f"Invalid mode: {mode}. Must be 'dark' or 'light'.")
 
     # 5. Build the ANSI color map
-    # ANSI standard color positions:
-    #   color0 = black, color1 = red, color2 = green, color3 = yellow
-    #   color4 = blue, color5 = magenta, color6 = cyan, color7 = white
+    # ANSI standard color positions (hue degrees):
+    #   color0 = black, color1 = red(0°), color2 = green(120°), color3 = yellow(60°)
+    #   color4 = blue(240°), color5 = magenta(300°), color6 = cyan(180°), color7 = white
     #   color8 = bright black, color9 = bright red, color10 = bright green
     #   color11 = bright yellow, color12 = bright blue, color13 = bright magenta
     #   color14 = bright cyan, color15 = bright white
     #
     # Mapping strategy:
     #   color0 = darkest gray
-    #   color1-3 = red, green, yellow accents
-    #   color4 = blue accent (aligned to ANSI blue)
-    #   color5-6 = magenta, cyan accents
+    #   color1,3 = red, yellow accents (hues[0], hues[1])
+    #   color2 = green accent (hues[2])
+    #   color6 = cyan accent (hues[3])
+    #   color4 = blue accent aligned to ANSI blue (hues[4])
+    #   color5 = magenta accent (hues[5])
     #   color7 = lightest gray
     #   color8 = second darkest gray
-    #   color9-11 = bright red, green, yellow
-    #   color12 = bright blue
-    #   color13-14 = bright magenta, cyan
+    #   color9-14 = bright variants at higher lightness
     #   color15 = near-white
 
     def make_color(h, l, s):
@@ -121,28 +127,29 @@ def generate_palette(brand_color: str, mode: str = "dark") -> dict:
     color15 = make_color(0.0, gray_l_values[3], 0.0)  # bright white
 
     # Accents using the 6 rotated hues
-    # color1=red, color2=green, color3=yellow, color4=blue, color5=magenta, color6=cyan
+    # ANSI standard: color1=red(0°), color2=green(120°), color3=yellow(60°),
+    #                color4=blue(240°), color5=magenta(300°), color6=cyan(180°)
     red_h = accent_hues[0]
-    green_h = accent_hues[1]
-    yellow_h = accent_hues[2]
-    blue_h = accent_hues[3]
-    magenta_h = accent_hues[4]
-    cyan_h = accent_hues[5]
+    yellow_h = accent_hues[1]
+    green_h = accent_hues[2]
+    cyan_h = accent_hues[3]
+    blue_h = accent_hues[4]
+    magenta_h = accent_hues[5]
 
     color1 = make_color(red_h, accent_l_values[0], accent_s_values[0])
-    color2 = make_color(green_h, accent_l_values[0], accent_s_values[0])
     color3 = make_color(yellow_h, accent_l_values[0], accent_s_values[0])
+    color2 = make_color(green_h, accent_l_values[0], accent_s_values[0])
+    color6 = make_color(cyan_h, accent_l_values[0], accent_s_values[0])
     color4 = make_color(blue_h, accent_l_values[0], accent_s_values[0])
     color5 = make_color(magenta_h, accent_l_values[0], accent_s_values[0])
-    color6 = make_color(cyan_h, accent_l_values[0], accent_s_values[0])
 
     # Bright variants use higher lightness/saturation
     color9 = make_color(red_h, accent_l_values[1], accent_s_values[1])
-    color10 = make_color(green_h, accent_l_values[1], accent_s_values[1])
     color11 = make_color(yellow_h, accent_l_values[1], accent_s_values[1])
+    color10 = make_color(green_h, accent_l_values[1], accent_s_values[1])
+    color14 = make_color(cyan_h, accent_l_values[1], accent_s_values[1])
     color12 = make_color(blue_h, accent_l_values[1], accent_s_values[1])
     color13 = make_color(magenta_h, accent_l_values[1], accent_s_values[1])
-    color14 = make_color(cyan_h, accent_l_values[1], accent_s_values[1])
 
     # UI colors
     background = color0
