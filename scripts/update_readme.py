@@ -98,8 +98,14 @@ def build_swatch_table(palette: dict[str, str]) -> str:
 
 
 README_PATTERN = re.compile(
-    r"(## Output Format.*?)(```toml\n)(.*?)(```\n)",
+    r"(## Output Format\n.*?)(?=\n## )",
     re.DOTALL,
+)
+
+_HEADER = (
+    "## Output Format\n\n"
+    "Generates a `colors.toml` file with 22 color keys:\n\n"
+    "Generated palette swatches (auto-generated — do not edit by hand):\n\n"
 )
 
 
@@ -114,20 +120,13 @@ def update_readme(readme_path: Path, toml_path: Path) -> None:
     table = build_swatch_table(palette)
 
     def replacer(m: re.Match) -> str:
-        before = m.group(1)
-        return (
-            before
-            + "Generated palette swatches (auto-generated — do not edit by hand):\n\n"
-            + table
-            + "\n"
-        )
+        return _HEADER + table + "\n"
 
     new_text, count = README_PATTERN.subn(replacer, readme_text, count=1)
 
     if count == 0:
         print(
-            f"ERROR: Could not find '## Output Format' section with a "
-            f"```toml code block in {readme_path}",
+            f"ERROR: Could not find '## Output Format' section in {readme_path}",
             file=sys.stderr,
         )
         sys.exit(1)
