@@ -13,9 +13,9 @@ Usage:
     # From a live style guide URL (fetches tokens.css)
     python scripts/update_theme.py --url https://brand.robominds.de
 
-    # Custom output locations
+    # Custom output location
     python scripts/update_theme.py --tokens ... \
-        --output colors.toml --readme README.md
+        --output colors.toml
 """
 
 from __future__ import annotations
@@ -46,21 +46,23 @@ TOKEN_MAPPING: dict[str, str] = {
     "dark_foreground": "--rm-gray-400",
     "light_foreground": "--rm-gray-100",
     "bright_foreground": "--rm-white",
-    # Accent colors (500 = base)
-    "red": "--rm-red-500",
-    "yellow": "--rm-yellow-500",
-    "orange": "--rm-orange-500",
-    "green": "--rm-green-500",
-    "cyan": "--rm-teal-500",
-    "blue": "--rm-blue-700",
-    "magenta": "--rm-violet-500",
-    "brown": "--rm-orange-700",
-    # Bright variants (300 = lighter)
+    # Terminal accent colors — use 300 (light) variants for readability on
+    # dark backgrounds. The 500 variants are designed for UI on light
+    # backgrounds and are too dark for terminal text.
+    "red": "--rm-red-300",
+    "yellow": "--rm-yellow-300",
+    "orange": "--rm-orange-300",
+    "green": "--rm-green-300",
+    "cyan": "--rm-teal-300",
+    "blue": "--rm-blue-500",
+    "magenta": "--rm-violet-300",
+    "brown": "--rm-orange-500",
+    # Bright variants — same 300 level (like catppuccin), blue gets 400
     "bright_red": "--rm-red-300",
     "bright_yellow": "--rm-yellow-300",
     "bright_green": "--rm-green-300",
     "bright_cyan": "--rm-teal-300",
-    "bright_blue": "--rm-blue-600",
+    "bright_blue": "--rm-blue-400",
     "bright_magenta": "--rm-violet-300",
 }
 
@@ -68,10 +70,10 @@ TOKEN_MAPPING: dict[str, str] = {
 SHELL_LOCK_MAPPING: dict[str, str] = {
     "text": "--rm-gray-200",
     "placeholder": "--rm-gray-400",
-    "text-error": "--rm-red-500",
+    "text-error": "--rm-red-300",
     "border": "--rm-gray-800",
     "border-active": "--rm-blue-700",
-    "border-error": "--rm-red-500",
+    "border-error": "--rm-red-300",
 }
 
 # keyboard.rgb uses the accent color (hex without #)
