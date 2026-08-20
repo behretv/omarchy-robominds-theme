@@ -1,9 +1,12 @@
 return {
-	{ "rebelot/kanagawa.nvim" },
+	{
+		"folke/tokyonight.nvim",
+		priority = 1000,
+	},
 	{
 		"LazyVim/LazyVim",
 		opts = {
-			colorscheme = "kanagawa",
+			colorscheme = "tokyonight-night",
 		},
 	},
 }
