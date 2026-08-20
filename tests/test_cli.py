@@ -1,7 +1,7 @@
 import subprocess
 import sys
-from pathlib import Path
 import tempfile
+from pathlib import Path
 
 
 def test_cli_help():
@@ -9,7 +9,7 @@ def test_cli_help():
     result = subprocess.run(
         [sys.executable, "-m", "palettgen.cli", "--help"],
         capture_output=True,
-        text=True
+        text=True,
     )
     assert result.returncode == 0
     assert "--brand" in result.stdout
@@ -18,14 +18,22 @@ def test_cli_help():
 
 
 def test_cli_generates_dark_mode(tmp_path):
-    """Test generating dark mode palette."""
+    """Test generating dark mode palette only (single-mode)."""
     output = tmp_path / "test-dark.toml"
     result = subprocess.run(
-        [sys.executable, "-m", "palettgen.cli",
-         "--brand", "#0052BB",
-         "--output", str(output)],
+        [
+            sys.executable,
+            "-m",
+            "palettgen.cli",
+            "--brand",
+            "#0052BB",
+            "--mode",
+            "dark",
+            "--output",
+            str(output),
+        ],
         capture_output=True,
-        text=True
+        text=True,
     )
     assert result.returncode == 0
     assert output.exists()
@@ -39,12 +47,19 @@ def test_cli_generates_light_mode(tmp_path):
     """Test generating light mode palette."""
     output = tmp_path / "test-light.toml"
     result = subprocess.run(
-        [sys.executable, "-m", "palettgen.cli",
-         "--brand", "#0052BB",
-         "--mode", "light",
-         "--output", str(output)],
+        [
+            sys.executable,
+            "-m",
+            "palettgen.cli",
+            "--brand",
+            "#0052BB",
+            "--mode",
+            "light",
+            "--output",
+            str(output),
+        ],
         capture_output=True,
-        text=True
+        text=True,
     )
     assert result.returncode == 0
     assert output.exists()
@@ -55,26 +70,33 @@ def test_cli_generates_light_mode(tmp_path):
 def test_cli_invalid_brand():
     """Test that invalid brand color is handled."""
     result = subprocess.run(
-        [sys.executable, "-m", "palettgen.cli",
-         "--brand", "not-a-color",
-         "--output", "/tmp/test-invalid.toml"],
+        [
+            sys.executable,
+            "-m",
+            "palettgen.cli",
+            "--brand",
+            "not-a-color",
+            "--output",
+            "/tmp/test-invalid.toml",
+        ],
         capture_output=True,
-        text=True
+        text=True,
     )
     # Should fail with ValueError or similar
     assert result.returncode != 0
 
 
 def test_cli_default_output():
-    """Test default output file."""
+    """Test default (no --mode) generates both dark and light TOMLs."""
     with tempfile.TemporaryDirectory() as tmpdir:
         import os
+
         os.chdir(tmpdir)
         result = subprocess.run(
-            [sys.executable, "-m", "palettgen.cli",
-             "--brand", "#0052BB"],
+            [sys.executable, "-m", "palettgen.cli", "--brand", "#0052BB"],
             capture_output=True,
-            text=True
+            text=True,
         )
         assert result.returncode == 0
         assert Path("colors.toml").exists()
+        assert Path("colors-light.toml").exists()
