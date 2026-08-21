@@ -29,7 +29,7 @@ follow-up.
   from the same tokens is validated by omarchy's own rendering path.
 - Node/npm are available locally (`@vscode/vsce` via `npx`) for packaging.
 - Marketplace publisher: `robominds`. Extension id: `robominds.robominds`.
-  Theme label: `Robominds`.
+  Theme label: `robominds`.
 
 ## Decisions
 
@@ -48,7 +48,7 @@ follow-up.
 vscode/
 ├── package.json                     # static: name "robominds", publisher
 │                                    #   "robominds", version,
-│                                    #   contributes.themes -> label "Robominds",
+│                                    #   contributes.themes -> label "robominds",
 │                                    #   uiTheme "vs-dark",
 │                                    #   path ./themes/robominds-color-theme.json
 ├── LICENSE                          # MIT (required by vsce; ext-level copy)
@@ -56,7 +56,7 @@ vscode/
 └── themes/
     └── robominds-color-theme.json   # GENERATED — checked in, packed by vsce
 Makefile
-vscode.json                          # -> {"name": "Robominds",
+vscode.json                          # -> {"name": "robominds",
                                      #     "extension": "robominds.robominds"}
 ```
 
@@ -89,7 +89,7 @@ Replaces the current Kanagawa reference:
 
 ```json
 {
-  "name": "Robominds",
+  "name": "robominds",
   "extension": "robominds.robominds"
 }
 ```
@@ -119,7 +119,7 @@ test-vscode:
 	$(MAKE) -s apply-vscode-theme
 
 apply-vscode-theme:
-	# insert/replace "workbench.colorTheme": "Robominds" in $(VSCODE_SETTINGS)
+	# insert/replace "workbench.colorTheme": "robominds" in $(VSCODE_SETTINGS)
 	# (sed, following the omarchy-theme-set-vscode approach)
 
 untest-vscode:
@@ -132,7 +132,7 @@ publish-vscode:
 - `update` — regenerate all theme files from the style guide (URL or local
   `TOKENS` path).
 - `vscode-login` — one-time `vsce login robominds` (Prompts for the PAT).
-- `test-vscode` — install the local extension (`--force`) and apply "Robominds"
+- `test-vscode` — install the local extension (`--force`) and apply "robominds"
   to the local VS Code; no marketplace involved; no restart needed. Delegates
   the settings.json edit to `apply-vscode-theme` (the sed insert/replace step),
   which is also what `untest-vscode`'s cleanup mirrors.
@@ -151,7 +151,7 @@ publish-vscode:
 5. `make vscode-login` (first time only).
 6. `make publish-vscode`.
 7. `omarchy theme set robominds` — installs the published extension (if not
-   already present) and switches the workbench theme to "Robominds".
+   already present) and switches the workbench theme to "robominds".
 8. `make untest-vscode` (optional cleanup of the local test override).
 
 ## Verification
@@ -162,7 +162,7 @@ publish-vscode:
   (editor, UI chrome, at least Python and Markdown syntax).
 - After first publish: `omarchy theme set robominds` on a machine without the
   extension installed — it must install `robominds.robominds` and set
-  `"workbench.colorTheme": "Robominds"` in `~/.config/Code/User/settings.json`.
+  `"workbench.colorTheme": "robominds"` in `~/.config/Code/User/settings.json`.
 
 ## Out of scope (deferred follow-ups)
 
