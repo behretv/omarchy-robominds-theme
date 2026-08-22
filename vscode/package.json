@@ -1,0 +1,16 @@
+{
+    "name": "robominds-theme",
+    "displayName": "robominds",
+    "description": "robominds color theme for VS Code",
+    "publisher": "local",
+    "version": "1.0.0",
+    "engines": { "vscode": "^1.70.0" },
+    "categories": ["Themes"],
+    "contributes": {
+        "themes": [{
+            "label": "robominds",
+            "uiTheme": "vs-dark",
+            "path": "./themes/robominds-color-theme.json"
+        }]
+    }
+}
