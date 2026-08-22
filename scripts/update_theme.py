@@ -83,7 +83,7 @@ TOKEN_MAPPING: dict[str, str] = {
     "bright_green": "--rm-green-500",
     "bright_cyan": "--rm-teal-500",
     "bright_blue": "--rm-blue-500",
-    "bright_magenta": "--rm-violet-300",
+    "bright_magenta": "--rm-magenta-500",
 }
 
 # shell.lock.toml uses a subset of colors

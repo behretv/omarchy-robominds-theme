@@ -246,8 +246,8 @@
         "editorInlayHint.foreground": "#6B6B6B",
         "editorInlayHint.typeBackground": "#F4C64D15",
         "editorInlayHint.typeForeground": "#F4C64D",
-        "editorInlayHint.parameterBackground": "#A98BE015",
-        "editorInlayHint.parameterForeground": "#A98BE0",
+        "editorInlayHint.parameterBackground": "#A63A8F15",
+        "editorInlayHint.parameterForeground": "#A63A8F",
         "editorRuler.foreground": "#6B6B6B40",
         "editorCodeLens.foreground": "#6B6B6B",
         "editorLightBulb.foreground": "#F4C64D",
@@ -530,7 +530,7 @@
         "terminal.ansiBrightGreen": "#15803D",
         "terminal.ansiBrightYellow": "#E8A100",
         "terminal.ansiBrightBlue": "#2593F4",
-        "terminal.ansiBrightMagenta": "#A98BE0",
+        "terminal.ansiBrightMagenta": "#A63A8F",
         "terminal.ansiBrightCyan": "#12857F",
         "terminal.ansiBrightWhite": "#E6E6E6",
         "terminal.tab.activeBorder": "#64B7F7",
@@ -629,8 +629,8 @@
         "symbolIcon.folderForeground": "#DBDBDB",
         "symbolIcon.functionForeground": "#64B7F7",
         "symbolIcon.interfaceForeground": "#F4C64D",
-        "symbolIcon.keyForeground": "#A98BE0",
-        "symbolIcon.keywordForeground": "#A98BE0",
+        "symbolIcon.keyForeground": "#A63A8F",
+        "symbolIcon.keywordForeground": "#A63A8F",
         "symbolIcon.methodForeground": "#64B7F7",
         "symbolIcon.moduleForeground": "#F4C64D",
         "symbolIcon.namespaceForeground": "#64B7F7",
@@ -640,14 +640,14 @@
         "symbolIcon.operatorForeground": "#2593F4",
         "symbolIcon.packageForeground": "#F4C64D",
         "symbolIcon.propertyForeground": "#DBDBDB",
-        "symbolIcon.referenceForeground": "#A98BE0",
+        "symbolIcon.referenceForeground": "#A63A8F",
         "symbolIcon.snippetForeground": "#6FC08D",
         "symbolIcon.stringForeground": "#6FC08D",
         "symbolIcon.structForeground": "#F4C64D",
         "symbolIcon.textForeground": "#DBDBDB",
         "symbolIcon.typeParameterForeground": "#F4C64D",
         "symbolIcon.unitForeground": "#E4761B",
-        "symbolIcon.variableForeground": "#A98BE0",
+        "symbolIcon.variableForeground": "#A63A8F",
         "debugIcon.breakpointForeground": "#E88585",
         "debugIcon.breakpointDisabledForeground": "#6B6B6B",
         "debugIcon.breakpointUnverifiedForeground": "#F4C64D",
@@ -1071,7 +1071,7 @@
                 "constant.character.escape"
             ],
             "settings": {
-                "foreground": "#A98BE0"
+                "foreground": "#A63A8F"
             }
         },
         {
@@ -1220,7 +1220,7 @@
                 "source.json meta.structure.dictionary.json meta.structure.dictionary.value.json meta.structure.dictionary.json meta.structure.dictionary.value.json meta.structure.dictionary.json meta.structure.dictionary.value.json meta.structure.dictionary.json support.type.property-name.json"
             ],
             "settings": {
-                "foreground": "#A98BE0"
+                "foreground": "#A63A8F"
             }
         },
         {
@@ -1555,7 +1555,7 @@
                 "keyword.other.DDL.sql"
             ],
             "settings": {
-                "foreground": "#A98BE0"
+                "foreground": "#A63A8F"
             }
         },
         {
