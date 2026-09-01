@@ -1,34 +1,42 @@
-# omarchy-robominds-theme
+# omarchy-robominds-dark
 
 Omarchy theme for robominds, using the official robominds brand colors extracted from the [living style guide](https://brand.robominds.de).
 
 The color scheme is extracted directly from the style guide's `tokens.css` (the Single Source of Truth for all robominds design tokens). When the style guide is updated, re-running the update script pulls the latest colors.
+
+## Install
+
+```bash
+omarchy theme install https://github.com/<org>/omarchy-robominds-dark.git
+```
+
+Or via the Makefile:
+
+```bash
+make install    # clone + apply
+make update     # pull latest + re-apply
+make apply TOKENS=/path/to/tokens.css   # regenerate from style guide + re-apply
+make apply URL=https://brand.robominds.de
+```
 
 ## Update the theme
 
 ```bash
 # Prerequisites: Python 3.11+
 
-# Generate all theme files from a local style guide
+# Generate theme files from a local style guide
 python scripts/update_theme.py --tokens tmp/robominds-styleguide/css/tokens.css
 
-# Generate everything AND install to VS Code in one command
-python scripts/update_theme.py --tokens tmp/robominds-styleguide/css/tokens.css --install-vscode
-
-# Shorthand: -a does the same as --install-vscode
-python scripts/update_theme.py --tokens tmp/robominds-styleguide/css/tokens.css -a
-
 # From the live style guide URL
-python scripts/update_theme.py --url https://brand.robominds.de -a
+python scripts/update_theme.py --url https://brand.robominds.de
 ```
 
 This generates:
 - `colors.toml` — terminal colors (quattro format with semantic names)
 - `shell.lock.toml` — shell lock screen colors
 - `keyboard.rgb` — keyboard RGB accent color
-- `vscode/robominds-color-theme.json` — VS Code color theme (rendered from omarchy's template with robominds colors)
 
-With `--install-vscode` / `-a`, it also installs the theme as a local VS Code extension at `~/.vscode/extensions/local.robominds-theme/` (and equivalents for VSCodium and Cursor if installed). After installing, switching to the robominds theme in omarchy automatically activates the robominds VS Code theme.
+`colors.toml` is the only file the installed theme needs: omarchy generates every per-app config (VS Code, Neovim, terminals, ...) from it via templates on `omarchy theme set`.
 
 ## Color mapping
 
@@ -60,13 +68,9 @@ The robominds style guide tokens map to the omarchy quattro theme as follows:
 
 | File | Purpose |
 |------|---------|
-| `colors.toml` | Terminal colors (quattro semantic format) |
+| `colors.toml` | Terminal colors (quattro semantic format) — the only file omarchy needs; it generates per-app configs from it |
 | `shell.lock.toml` | Shell lock screen colors |
 | `keyboard.rgb` | Keyboard RGB accent color |
-| `vscode/robominds-color-theme.json` | VS Code color theme (generated from omarchy template) |
-| `vscode.json` | VS Code extension reference (points to local.robominds-theme) |
-| `vscode/package.json` | VS Code extension manifest |
-| `neovim.lua` | Neovim colorscheme config |
 | `icons.theme` | Icon theme name |
 | `backgrounds/` | Wallpaper images |
 | `unlock.png` | Lock screen image |
